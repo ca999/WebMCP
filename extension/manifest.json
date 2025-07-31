@@ -1,0 +1,21 @@
+{
+  "name": "WebMCP",
+  "description": "Extension for capturing screenshots, logs and network HAR to send to your local MCP server",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "webmcp.html",
+    "default_icon": "ui.png"
+  },
+  "permissions": [
+  "tabs",
+  "activeTab",
+  "downloads"
+    ],
+    "host_permissions": [
+    "<all_urls>"
+    ],
+    "background": {
+    "service_worker": "background.js"
+    }
+}
