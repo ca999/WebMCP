@@ -87,6 +87,4 @@ class ContentScriptManager {
         }, (response) => {
             console.log('Message sent to server:', response);
         });
-    }
-
-    //
+    } }
