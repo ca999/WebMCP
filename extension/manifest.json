@@ -1,21 +1,29 @@
 {
-  "name": "WebMCP",
-  "description": "Extension for capturing screenshots, logs and network HAR to send to your local MCP server",
-  "version": "1.0",
   "manifest_version": 3,
-  "action": {
-    "default_popup": "webmcp.html",
-    "default_icon": "ui.png"
-  },
+  "name": "Webmcp",
+  "version": "1.0",
+  "description": "Chrome extension with WebSocket connection to local server",
   "permissions": [
-  "tabs",
-  "activeTab",
-  "downloads"
-    ],
-    "host_permissions": [
-    "<all_urls>"
-    ],
-    "background": {
-    "service_worker": "background.js"
+    "activeTab",
+    "storage",
+    "background"
+  ],
+  "host_permissions": [
+    "ws://localhost:8765/*",
+    "http://localhost:8765/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "WebSocket Extension"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
     }
+  ]
 }

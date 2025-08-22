@@ -17,7 +17,9 @@ async def handler(ws):
         async def receiveAndSave():
             async for message in ws:
                 data = json.loads(message)
-                if data.get("action") == 'screenshot':
+                if data.get("error"):
+                    print(data.get('error'))
+                elif data.get("action") == 'screenshot':
                     dataUrl = data.get('dataUrl')
                     if dataUrl:
                         data = dataUrl.split(",", 1)[1]

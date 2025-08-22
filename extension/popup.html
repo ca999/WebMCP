@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            width: 350px;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin: 0;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            margin: 0 0 20px 0;
+            font-size: 20px;
+            text-align: center;
+        }
+        
+        .status {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .status.connected .status-indicator {
+            background-color: #4CAF50;
+            box-shadow: 0 0 10px #4CAF50;
+        }
+        
+        .status.disconnected .status-indicator {
+            background-color: #f44336;
+            box-shadow: 0 0 10px #f44336;
+        }
+        
+        .status.connecting .status-indicator {
+            background-color: #FF9800;
+            box-shadow: 0 0 10px #FF9800;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        
+        .info p {
+            margin: 5px 0;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .message-section {
+            margin-bottom: 20px;
+        }
+        
+        .message-section h3 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        input, select {
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-size: 14px;
+        }
+        
+        input {
+            flex: 1;
+        }
+        
+        select {
+            min-width: 100px;
+        }
+        
+        .send-btn {
+            background: #4CAF50 !important;
+        }
+        
+        .send-btn:hover {
+            background: #45a049 !important;
+        }
+        
+        .messages {
+            max-height: 200px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            padding: 10px;
+        }
+        
+        .message {
+            margin-bottom: 10px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            font-size: 12px;
+        }
+        
+        .message-time {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 10px;
+        }
+        
+        .clear-btn {
+            background: #f44336 !important;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .clear-btn:hover {
+            background: #da190b !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WebSocket Extension</h1>
+        
+        <div class="status" id="status">
+            <div class="status-indicator"></div>
+            <span id="status-text">Auto-connecting...</span>
+        </div>
+        
+        <div class="info">
+            <p><strong>Auto-Connection:</strong> The extension automatically connects to your local server when it starts.</p>
+            <p><strong>Server URL:</strong> ws://localhost:8765</p>
+        </div>
+        
+        <div class="controls">
+            <button id="connect-btn">Connect</button>
+            <button id="disconnect-btn">Disconnect</button>
+        </div>
+        
+        <div class="message-section">
+            <h3>Send Message</h3>
+            <div class="input-group">
+                <select id="message-type">
+                    <option value="ping">Ping</option>
+                    <option value="echo">Echo</option>
+                    <option value="broadcast">Broadcast</option>
+                </select>
+                <input type="text" id="message-input" placeholder="Enter message...">
+                <button id="send-btn" class="send-btn">Send</button>
+            </div>
+        </div>
+        
+        <div class="message-section">
+            <h3>Messages</h3>
+            <div class="messages" id="messages"></div>
+            <button id="clear-btn" class="clear-btn">Clear Messages</button>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
